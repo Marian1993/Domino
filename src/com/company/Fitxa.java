@@ -7,7 +7,7 @@ public class Fitxa {
     private boolean usada;
     private int total;
 
-    public Fitxa(int dreta, int esquerra){
+    public Fitxa(int esquerra, int dreta){
 
         this.usada = false;
         this.dreta = dreta;
@@ -41,4 +41,5 @@ public class Fitxa {
     public void setUsada(boolean usada) {
         this.usada = usada;
     }
+
 }

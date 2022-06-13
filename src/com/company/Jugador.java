@@ -16,6 +16,7 @@ public class Jugador {
         this.nom = nom;
         this.id = id;
         this.guanyador = false;
+        fitxesJugador = new ArrayList<>();
     }
 
     public String getNom() {
@@ -36,6 +37,7 @@ public class Jugador {
 
     public void addFitxa(Fitxa fitxa){
         fitxesJugador.add(fitxa);
+        addPunts(fitxa.getTotal());
     }
 
     public boolean revisarFitxes(Fitxa fitxa){
@@ -57,7 +59,7 @@ public class Jugador {
         return punts;
     }
 
-    public void setPunts(int punts) {
+    public void addPunts(int punts) {
         this.punts += punts;
     }
 

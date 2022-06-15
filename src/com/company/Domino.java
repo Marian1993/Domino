@@ -15,7 +15,7 @@ public abstract class Domino {
 
             for (int i = 0; i < jugadors.size(); i++) {
 
-                if(jugadors.get(i).revisarFitxes(new Fitxa(costats, costats))){
+                if(jugadors.get(i).fitxesRepetides(new Fitxa(costats, costats))){
 
                     return jugadors.get(i);
                 }

@@ -31,8 +31,8 @@ public class Jugador {
         return id;
     }
 
-    public int getFitxesJugador() {
-        return fitxesJugador.size();
+    public ArrayList<Fitxa> getFitxesJugador() {
+        return fitxesJugador;
     }
 
     public void addFitxa(Fitxa fitxa){
@@ -40,7 +40,11 @@ public class Jugador {
         addPunts(fitxa.getTotal());
     }
 
-    public boolean revisarFitxes(Fitxa fitxa){
+    public void eliminarFitxa(Fitxa fitxa){
+        fitxesJugador.remove(fitxa);
+    }
+
+    public boolean fitxesRepetides(Fitxa fitxa){
 
         for (int i = 0; i < fitxesJugador.size(); i++) {
 
@@ -49,6 +53,20 @@ public class Jugador {
              }
         }
         return false;
+    }
+
+    private String fitxa(Fitxa fitxa){
+
+        return fitxa.getEsquerra() + "-" + fitxa.getDreta();
+
+    }
+    public void imprimirFitxes(){
+
+        for (int i = 0; i < fitxesJugador.size(); i++) {
+
+            System.out.print(i + " = " + fitxa(fitxesJugador.get(i)) + "  ");
+
+        }
     }
 
     public boolean maBuida(){

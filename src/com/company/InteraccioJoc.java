@@ -6,6 +6,8 @@ import java.util.Random;
 public class InteraccioJoc {
 
     private ArrayList<Fitxa> fitxes = new ArrayList<Fitxa>();
+    private ArrayList<Fitxa> taulell = new ArrayList<Fitxa>();
+    private static Jugador[] jugadors;
 
     public void crearFitxes(){
 
@@ -17,7 +19,6 @@ public class InteraccioJoc {
             }
         }
     }
-
     public void repartirFitxes(Jugador[] jugadors){
 
         for (Jugador jugador : jugadors) {
@@ -37,6 +38,25 @@ public class InteraccioJoc {
         }
     }
 
+    public void colocarFitxa(Fitxa fitxa){
+
+        if(taulell.get(0).getEsquerra() == fitxa.getEsquerra() || taulell.get(0).getEsquerra() == fitxa.getDreta()
+                || taulell.get(0).getDreta() == fitxa.getEsquerra() || taulell.get(0).getDreta() == fitxa.getDreta()){
+
+            taulell.add(0,fitxa);
+
+        }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta()
+                || taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta()){
+
+            taulell.add(taulell.size(), fitxa);
+        }
+    }
+
+    public static  void joc(){
+
+        jugadors = new Jugador[Input.eleccioParticipants()];
+
+    }
 
 
 }

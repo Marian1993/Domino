@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -11,7 +13,17 @@ public class Main {
         jugadors[2] = new Jugador("lele",3);
         jugadors[3] = new Jugador("lili",4);
 
-        joc.crearFitxes();
+        /*joc.crearFitxes();
         joc.repartirFitxes(jugadors);
+        Input.elegirFitxa(jugadors[0]);*/
+
+        ArrayList<String> array = new ArrayList<>();
+
+        for (int i = 0; i < 6; i++) {
+
+            array.add("ejemplo " + i);
+            System.out.println(array.get(i));
+        }
+        System.out.println(array.get(array.size()-1));
     }
 }

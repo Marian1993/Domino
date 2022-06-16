@@ -1,23 +1,23 @@
 package com.company;
 
-import java.util.ArrayList;
-
 public abstract class Domino {
 
     protected int totalPuntsSolitari;
     protected int totalPuntsParella;
 
-    public Jugador elegirQuiInizialitza(ArrayList<Jugador> jugadors){
+
+    //Tots els dominos tenen la mateixa manera
+    public Jugador elegirQuiInizialitza(Jugador[] jugadors){
 
         int costats = 6;
 
         while (true) {
 
-            for (int i = 0; i < jugadors.size(); i++) {
+            for (int i = 0; i < jugadors.length; i++) {
 
-                if(jugadors.get(i).fitxesRepetides(new Fitxa(costats, costats))){
+                if(jugadors[i].comprovarFitxaPerSortir(new Fitxa(costats, costats))){
 
-                    return jugadors.get(i);
+                    return jugadors[i];
                 }
             }
             costats--;
@@ -25,25 +25,37 @@ public abstract class Domino {
     }
     public abstract boolean empat();
 
-    public void fiDelJocSolitari(ArrayList<Jugador> jugador){
+    public void tovarGuanyadorSolitari(Jugador[] jugadors){
 
-        for (int i = 0; i < jugador.size(); i++) {
+        for (int i = 0; i < jugadors.length; i++) {
 
-            if(jugador.get(i).getPunts() >= totalPuntsSolitari){
+            if(jugadors[i].getPunts() >= totalPuntsSolitari){
 
-                jugador.get(i).setGuanyador(true);
+                jugadors[i].setGuanyador(true);
             }
         }
     }
-    public void fiDelJocParella(ArrayList<Jugador> jugador){
+    public void trovarGuanyadorParelles(Jugador[] jugadors){
 
-        for (int i = 0; i < jugador.size(); i++) {
+        for (int i = 0; i < jugadors.length; i++) {
 
-            if(jugador.get(i).getPunts() >= totalPuntsParella){
+            if(jugadors[i].getPunts() >= totalPuntsParella){
 
-                jugador.get(i).setGuanyador(true);
+                jugadors[i].setGuanyador(true);
             }
         }
+    }
+
+    public boolean fiDelJoc(Jugador[]jugadors){
+
+        for (int i = 0; i < jugadors.length; i++) {
+
+            if(jugadors[i].isGuanyador()){
+                System.out.println("El jugador " );
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getTotalPuntsSolitari() {

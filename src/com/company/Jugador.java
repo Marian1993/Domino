@@ -44,7 +44,7 @@ public class Jugador {
         fitxesJugador.remove(fitxa);
     }
 
-    public boolean fitxesRepetides(Fitxa fitxa){
+    public boolean comprovarFitxaPerSortir(Fitxa fitxa){
 
         for (int i = 0; i < fitxesJugador.size(); i++) {
 

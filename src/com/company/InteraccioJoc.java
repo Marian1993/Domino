@@ -5,11 +5,12 @@ import java.util.Random;
 
 public class InteraccioJoc {
 
-    private ArrayList<Fitxa> fitxes = new ArrayList<Fitxa>();
-    private ArrayList<Fitxa> taulell = new ArrayList<Fitxa>();
+    private static ArrayList<Fitxa> fitxes = new ArrayList<Fitxa>();
+    private static ArrayList<Fitxa> taulell = new ArrayList<Fitxa>();
+    private static Domino[] dominos = {new DominoLlati(),new DominoChileno(), new DominoVenezola()};
     private static Jugador[] jugadors;
 
-    public void crearFitxes(){
+    public static void crearFitxes(){
 
         for (int i = 0; i < 7; i++) {
 
@@ -19,7 +20,7 @@ public class InteraccioJoc {
             }
         }
     }
-    public void repartirFitxes(Jugador[] jugadors){
+    public static void repartirFitxes(Jugador[] jugadors){
 
         for (Jugador jugador : jugadors) {
 
@@ -38,7 +39,8 @@ public class InteraccioJoc {
         }
     }
 
-    public void colocarFitxa(Fitxa fitxa){
+
+    public static void colocarFitxa(Fitxa fitxa){
 
         if(taulell.get(0).getEsquerra() == fitxa.getEsquerra() || taulell.get(0).getEsquerra() == fitxa.getDreta()
                 || taulell.get(0).getDreta() == fitxa.getEsquerra() || taulell.get(0).getDreta() == fitxa.getDreta()){
@@ -52,9 +54,53 @@ public class InteraccioJoc {
         }
     }
 
-    public static  void joc(){
+    public static void joc(){
+
+        do {
+
+            int domino = Input.eleccioDomino();
+            jugadors = new Jugador[Input.eleccioParticipants()];
+            Input.nomJugador(jugadors);
+
+            if (jugadors.length == 2) {
+                partidaEnSolitari(domino);
+
+            }else {
+                partidaEnParelles(domino);
+            }
+
+        }while (Input.reiniciaJoc());
+
+    }
+
+    public static void partidaEnSolitari(int domino){
+
+        do {
+            crearFitxes();
+            repartirFitxes(jugadors);
+            dominos[domino].elegirQuiInizialitza(jugadors).getId();
+            while(!dominos[domino].fiDelJoc(jugadors)){
+
+                colocarFitxa(Input.elegirFitxa(jugadors[1]));
+                Output.imprimirTaulell(taulell);
+            }
+        }while (true);
+
+    }
+    public static void partidaEnParelles(int domino){
+
+    }
+
+    public  static void algo(){
 
         jugadors = new Jugador[Input.eleccioParticipants()];
+        Input.nomJugador(jugadors);
+
+        for (int i = 0; i < jugadors.length; i++) {
+
+            System.out.println(jugadors[i].getNom());
+        }
+
 
     }
 

@@ -17,13 +17,8 @@ public class Main {
         joc.repartirFitxes(jugadors);
         Input.elegirFitxa(jugadors[0]);*/
 
-        ArrayList<String> array = new ArrayList<>();
+        InteraccioJoc.joc();
 
-        for (int i = 0; i < 6; i++) {
 
-            array.add("ejemplo " + i);
-            System.out.println(array.get(i));
-        }
-        System.out.println(array.get(array.size()-1));
     }
 }

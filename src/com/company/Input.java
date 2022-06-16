@@ -7,18 +7,24 @@ public class Input {
 
     private final static Scanner sc = new Scanner(System.in);
 
-    public static void nomJugador(Jugador jugador){
+    public static void nomJugador(Jugador[] jugadors){
 
-        System.out.print("Nom del jugador " + jugador.getId() + " :");
-        jugador.setNom(sc.next());
+        for (int i = 0; i < jugadors.length; i++) {
 
+            System.out.print("Nom del jugador " + i + " :");
+            jugadors[i] = new Jugador(sc.next(),i);
+        }
     }
+
     public static int eleccioDomino(){
+
         System.out.println("Quin tipus de domino vols:");
         System.out.println("0 -> Domino Venezola");
         System.out.println("1 -> Domino Llati");
         System.out.println("2 -> Domino Chileno");
+
         int eleccio = PosarNumero.esNecessitaNumero();
+
         if(eleccio == 0){
             return 0;
         }else if( eleccio == 1){
@@ -52,15 +58,15 @@ public class Input {
         return 0;
     }
 
-    public static void elegirFitxa(Jugador jugador){
+    public static Fitxa elegirFitxa(Jugador jugador){
 
         jugador.imprimirFitxes();
         System.out.print("Quina fitxa vols colocar = ");
         int numFitxa = PosarNumero.esNecessitaNumero();
 
-        //Fitxa fitxa = jugador.getFitxesJugador().get(numFitxa);
-        jugador.eliminarFitxa(jugador.getFitxesJugador().get(numFitxa));
-
+        Fitxa fitxa = jugador.getFitxesJugador().get(numFitxa);
+        jugador.eliminarFitxa(fitxa);
+        return fitxa;
     }
 
 
@@ -79,6 +85,14 @@ public class Input {
             return  true;
         }
         return  false;
+    }
+
+    public static boolean reiniciaJoc(){
+
+        System.out.println("Reiniciar partida = 0 \n" + "Per sortir pitja cualsevol numero");
+        int reinici = PosarNumero.esNecessitaNumero();
+
+        return reinici == 0;
     }
 
 }

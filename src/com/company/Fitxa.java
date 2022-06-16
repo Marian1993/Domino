@@ -18,16 +18,8 @@ public class Fitxa {
         return dreta;
     }
 
-    public void setDreta(int dreta) {
-        this.dreta = dreta;
-    }
-
     public int getEsquerra() {
         return esquerra;
-    }
-
-    public void setEsquerra(int esquerra) {
-        this.esquerra = esquerra;
     }
 
     public int getTotal() {

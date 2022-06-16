@@ -25,25 +25,51 @@ public abstract class Domino {
     }
     public abstract boolean empat();
 
-    public void tovarGuanyadorSolitari(Jugador[] jugadors){
+    public boolean tovarGuanyadorSolitari(Jugador[] jugadors){
 
         for (int i = 0; i < jugadors.length; i++) {
 
             if(jugadors[i].getPunts() >= totalPuntsSolitari){
 
                 jugadors[i].setGuanyador(true);
+                System.out.println("El guanyador ha estat = " + jugadors[i].getNom());
+                return true;
             }
         }
+        return false;
     }
-    public void trovarGuanyadorParelles(Jugador[] jugadors){
+    public boolean trovarGuanyadorParelles(Jugador[] jugadors){
 
         for (int i = 0; i < jugadors.length; i++) {
 
             if(jugadors[i].getPunts() >= totalPuntsParella){
 
                 jugadors[i].setGuanyador(true);
+
+                if(jugadors.length >= i+2){
+
+                    System.out.print("Els guanyadors han estat = " + jugadors[i].getNom() + " i " + jugadors[i+2].getNom());
+
+                }else {
+                    System.out.print("Els guanyadors han estat = " + jugadors[i].getNom() + " i " + jugadors[i-2].getNom());
+
+                }
+                return true;
             }
         }
+        return false;
+    }
+    public static boolean guanyarRonda(Jugador[] jugadors){
+
+        for (int i = 0; i < jugadors.length; i++) {
+
+             if(jugadors[i].maBuida()){
+
+
+
+             }
+        }
+        return false;
     }
 
     public boolean fiDelJoc(Jugador[]jugadors){

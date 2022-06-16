@@ -23,10 +23,6 @@ public class Jugador {
         return nom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     public int getId() {
         return id;
     }
@@ -42,6 +38,7 @@ public class Jugador {
 
     public void eliminarFitxa(Fitxa fitxa){
         fitxesJugador.remove(fitxa);
+        llevarPunts(fitxa.getTotal());
     }
 
     public boolean comprovarFitxaPerSortir(Fitxa fitxa){
@@ -80,6 +77,8 @@ public class Jugador {
     public void addPunts(int punts) {
         this.punts += punts;
     }
+
+    public void llevarPunts(int punts){this.punts -= punts;}
 
     public boolean isGuanyador() {
         return guanyador;

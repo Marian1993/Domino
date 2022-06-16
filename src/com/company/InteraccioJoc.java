@@ -78,11 +78,13 @@ public class InteraccioJoc {
         do {
             crearFitxes();
             repartirFitxes(jugadors);
-            dominos[domino].elegirQuiInizialitza(jugadors).getId();
+            int torn = dominos[domino].elegirQuiInizialitza(jugadors).getId();
             while(!dominos[domino].fiDelJoc(jugadors)){
 
-                colocarFitxa(Input.elegirFitxa(jugadors[1]));
+                colocarFitxa(Input.elegirFitxa(jugadors[torn%2]));
                 Output.imprimirTaulell(taulell);
+
+                torn++;
             }
         }while (true);
 

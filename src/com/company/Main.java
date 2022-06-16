@@ -18,6 +18,7 @@ public class Main {
         Input.elegirFitxa(jugadors[0]);*/
 
         InteraccioJoc.joc();
+        //InteraccioJoc.algo();
 
 
     }

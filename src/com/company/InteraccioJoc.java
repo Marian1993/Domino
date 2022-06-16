@@ -26,32 +26,39 @@ public class InteraccioJoc {
 
             int fitxesAssignades = 0;
 
-            while (fitxesAssignades != 6) {
+            while (fitxesAssignades != 7) {
 
                 Fitxa fitxa = fitxes.get((int) (Math.random() * fitxes.size()));
                 if (!(fitxa.isUsada())) {
                     fitxa.setUsada(true);
                     jugador.addFitxa(fitxa);
                     fitxesAssignades++;
-                    System.out.println(fitxa.getEsquerra() + "-" + fitxa.getDreta());
+                    //System.out.println(fitxa.getEsquerra() + "-" + fitxa.getDreta());
                 }
             }
         }
     }
 
 
-    public static void colocarFitxa(Fitxa fitxa){
+    public static boolean colocarFitxa(Fitxa fitxa){
 
-        if(taulell.get(0).getEsquerra() == fitxa.getEsquerra() || taulell.get(0).getEsquerra() == fitxa.getDreta()
+        if(taulell.isEmpty()){
+            taulell.add(fitxa);
+            return true;
+
+        }else if(taulell.get(0).getEsquerra() == fitxa.getEsquerra() || taulell.get(0).getEsquerra() == fitxa.getDreta()
                 || taulell.get(0).getDreta() == fitxa.getEsquerra() || taulell.get(0).getDreta() == fitxa.getDreta()){
 
             taulell.add(0,fitxa);
+            return  true;
 
         }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta()
                 || taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta()){
 
             taulell.add(taulell.size(), fitxa);
+            return true;
         }
+        return false;
     }
 
     public static void joc(){
@@ -79,14 +86,14 @@ public class InteraccioJoc {
             crearFitxes();
             repartirFitxes(jugadors);
             int torn = dominos[domino].elegirQuiInizialitza(jugadors).getId();
-            while(!dominos[domino].fiDelJoc(jugadors)){
+            while(!dominos[domino].guanyarRonda(jugadors)){
 
-                colocarFitxa(Input.elegirFitxa(jugadors[torn%2]));
+                Input.elegirFitxa(jugadors[torn%2],taulell);
                 Output.imprimirTaulell(taulell);
 
                 torn++;
             }
-        }while (true);
+        }while (!dominos[domino].guanyadorSolitari(jugadors));
 
     }
     public static void partidaEnParelles(int domino){
@@ -95,12 +102,17 @@ public class InteraccioJoc {
 
     public  static void algo(){
 
-        jugadors = new Jugador[Input.eleccioParticipants()];
-        Input.nomJugador(jugadors);
+        ArrayList<String> array = new ArrayList<>();
 
-        for (int i = 0; i < jugadors.length; i++) {
+        for (int i = 0; i < 6; i++) {
 
-            System.out.println(jugadors[i].getNom());
+            array.add(0,"ejemplo " + i);
+
+        }
+        for (int i = 0; i < array.size(); i++) {
+
+            System.out.println(array.get(i));
+
         }
 
 

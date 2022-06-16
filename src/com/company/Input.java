@@ -18,10 +18,10 @@ public class Input {
 
     public static int eleccioDomino(){
 
-        System.out.println("Quin tipus de domino vols:");
         System.out.println("0 -> Domino Venezola");
         System.out.println("1 -> Domino Llati");
         System.out.println("2 -> Domino Chileno");
+        System.out.print("Quin tipus de domino vols: ");
 
         int eleccio = PosarNumero.esNecessitaNumero();
 
@@ -42,9 +42,9 @@ public class Input {
 
     public static int eleccioParticipants(){
 
-        System.out.println("Quin tipus de partida vols:");
         System.out.println("0 -> Partida en solitari");
         System.out.println("1 -> Partida en parelles");
+        System.out.print("Quin tipus de partida vols: ");
         int eleccio = PosarNumero.esNecessitaNumero();
         if(eleccio == 0){
             return 2;
@@ -58,34 +58,26 @@ public class Input {
         return 0;
     }
 
-    public static Fitxa elegirFitxa(Jugador jugador){
-
-        jugador.imprimirFitxes();
-        System.out.print("Quina fitxa vols colocar = ");
-        int numFitxa = PosarNumero.esNecessitaNumero();
-
-        Fitxa fitxa = jugador.getFitxesJugador().get(numFitxa);
-        jugador.eliminarFitxa(fitxa);
-        return fitxa;
-    }
+    public static Fitxa elegirFitxa(Jugador jugador, ArrayList<Fitxa> taulell){
 
 
-    public static boolean colocarFitxa(Fitxa fitxa, ArrayList<Fitxa> taulell){
+        while (true) {
 
-        if(taulell.get(0).getEsquerra() == fitxa.getEsquerra() || taulell.get(0).getEsquerra() == fitxa.getDreta()
-                || taulell.get(0).getDreta() == fitxa.getEsquerra() || taulell.get(0).getDreta() == fitxa.getDreta()){
+            jugador.imprimirFitxes();
+            System.out.print(jugador.getNom() + " quina fitxa vols colocar = ");
+            int numFitxa = PosarNumero.esNecessitaNumero();
 
-            taulell.add(0,fitxa);
-            return true;
-
-        }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta()
-                || taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta()){
-
-            taulell.add(taulell.size(), fitxa);
-            return  true;
+            Fitxa fitxa = jugador.getFitxesJugador().get(numFitxa);
+            if (InteraccioJoc.colocarFitxa(fitxa)) {
+                jugador.eliminarFitxa(fitxa);
+                return fitxa;
+            }else {
+                System.out.println("Aquesta fitxa no en encaixa a cap banda");
+            }
         }
-        return  false;
     }
+
+
 
     public static boolean reiniciaJoc(){
 

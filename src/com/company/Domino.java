@@ -25,7 +25,7 @@ public abstract class Domino {
     }
     public abstract boolean empat();
 
-    public boolean tovarGuanyadorSolitari(Jugador[] jugadors){
+    public boolean guanyadorSolitari(Jugador[] jugadors){
 
         for (int i = 0; i < jugadors.length; i++) {
 
@@ -38,7 +38,7 @@ public abstract class Domino {
         }
         return false;
     }
-    public boolean trovarGuanyadorParelles(Jugador[] jugadors){
+    public boolean guanyadorParelles(Jugador[] jugadors){
 
         for (int i = 0; i < jugadors.length; i++) {
 
@@ -59,15 +59,25 @@ public abstract class Domino {
         }
         return false;
     }
-    public static boolean guanyarRonda(Jugador[] jugadors){
+    public boolean guanyarRonda(Jugador[] jugadors){
+
+        int punts = 0;
 
         for (int i = 0; i < jugadors.length; i++) {
 
-             if(jugadors[i].maBuida()){
+             if(!jugadors[i].maBuida()){
 
-
-
+                 punts += jugadors[i].getPunts();
+                 jugadors[i].setPunts(0);
              }
+        }
+        for (int i = 0; i < jugadors.length; i++) {
+
+            if(jugadors[i].maBuida()){
+
+                jugadors[i].addPuntsTotals(punts);
+                return true;
+            }
         }
         return false;
     }

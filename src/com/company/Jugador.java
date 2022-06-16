@@ -8,6 +8,7 @@ public class Jugador {
     private int id;
     private ArrayList<Fitxa> fitxesJugador;
     private int punts;
+    private int puntsTotals;
     private boolean guanyador;
 
 
@@ -74,11 +75,23 @@ public class Jugador {
         return punts;
     }
 
+    public void setPunts(int punts) {
+        this.punts = punts;
+    }
+
     public void addPunts(int punts) {
         this.punts += punts;
     }
 
     public void llevarPunts(int punts){this.punts -= punts;}
+
+    public int getPuntsTotals() {
+        return puntsTotals;
+    }
+
+    public void addPuntsTotals(int puntsTotals) {
+        this.puntsTotals += puntsTotals;
+    }
 
     public boolean isGuanyador() {
         return guanyador;

@@ -31,7 +31,6 @@ public abstract class Domino {
 
             if(jugadors[i].getPuntsTotals() >= totalPuntsSolitari){
 
-                jugadors[i].setGuanyador(true);
                 System.out.println("El guanyador ha estat = " + jugadors[i].getNom());
                 return true;
             }
@@ -43,8 +42,6 @@ public abstract class Domino {
         for (int i = 0; i < jugadors.length; i++) {
 
             if(jugadors[i].getPunts() >= totalPuntsParella){
-
-                jugadors[i].setGuanyador(true);
 
                 if(jugadors.length >= i+2){
 

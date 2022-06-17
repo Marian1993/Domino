@@ -63,21 +63,84 @@ public class Input {
 
         while (true) {
 
+            collirFitxesNecessaries(jugador, taulell);
             jugador.imprimirFitxes();
             System.out.print(jugador.getNom() + " quina fitxa vols colocar = ");
             int numFitxa = PosarNumero.esNecessitaNumero();
 
             Fitxa fitxa = jugador.getFitxesJugador().get(numFitxa);
-            if (InteraccioJoc.colocarFitxa(fitxa)) {
+            if (comprovarSiEsPotColocarSaFitxa(fitxa, taulell)) {
                 jugador.eliminarFitxa(fitxa);
                 return fitxa;
-            }else {
+            } else {
                 System.out.println("Aquesta fitxa no en encaixa a cap banda");
             }
+
         }
     }
 
+    public static boolean comprovarSiEsPotColocarSaFitxa(Fitxa fitxa, ArrayList<Fitxa> taulell){
 
+        if(taulell.isEmpty()){
+            return true;
+
+        }else if(taulell.get(0).getDreta() == fitxa.getEsquerra() && !taulell.get(0).isDretaOcupada()){
+
+            return true;
+
+        }else if(taulell.get(0).getDreta() == fitxa.getDreta() && !taulell.get(0).isDretaOcupada()){
+
+            return true;
+
+        }else if(taulell.get(0).getEsquerra() == fitxa.getEsquerra() && !taulell.get(0).isEsquerraOcupada()){
+
+            return true;
+
+        }else if(taulell.get(0).getEsquerra() == fitxa.getDreta() && !taulell.get(0).isEsquerraOcupada()){
+
+            return true;
+
+        }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
+
+            return true;
+
+        }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
+
+            return true;
+
+        }else if(taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra() && !taulell.get(taulell.size()-1).isDretaOcupada()){
+
+            return true;
+
+        } else if(taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta() && !taulell.get(taulell.size()-1).isDretaOcupada()){
+
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean collirFitxesNecessaries(Jugador jugador, ArrayList<Fitxa> taulell){
+
+        int totalFitxesCollides = 0;
+        int fitxesJugador = jugador.getFitxesJugador().size();
+
+        while (true) {
+
+            for (int i = 0; i < jugador.getFitxesJugador().size(); i++) {
+
+                if(comprovarSiEsPotColocarSaFitxa(jugador.getFitxesJugador().get(i),taulell)){
+
+                    totalFitxesCollides = jugador.getFitxesJugador().size() - fitxesJugador;
+                    if( totalFitxesCollides > 0){
+                        System.out.println("Se t'han collit " + totalFitxesCollides + " fitxa/es");
+                    }
+                    return true;
+                }
+            }
+            System.out.println("Ara se te colliran fitxes fins que en tinguis per tirar");
+            InteraccioJoc.collirFitxa(jugador);
+        }
+    }
 
     public static boolean reiniciaJoc(){
 

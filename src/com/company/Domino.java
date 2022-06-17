@@ -29,7 +29,7 @@ public abstract class Domino {
 
         for (int i = 0; i < jugadors.length; i++) {
 
-            if(jugadors[i].getPunts() >= totalPuntsSolitari){
+            if(jugadors[i].getPuntsTotals() >= totalPuntsSolitari){
 
                 jugadors[i].setGuanyador(true);
                 System.out.println("El guanyador ha estat = " + jugadors[i].getNom());
@@ -59,39 +59,66 @@ public abstract class Domino {
         }
         return false;
     }
-    public boolean guanyarRonda(Jugador[] jugadors){
+    public boolean guanyarRondaSolitari(Jugador[] jugadors){
 
         int punts = 0;
+        boolean guanyador = false;
 
         for (int i = 0; i < jugadors.length; i++) {
 
-             if(!jugadors[i].maBuida()){
+            punts += jugadors[i].getPunts();
 
-                 punts += jugadors[i].getPunts();
-                 jugadors[i].setPunts(0);
-             }
+            if(jugadors[i].maBuida()){
+                guanyador = true;
+            }
+
         }
         for (int i = 0; i < jugadors.length; i++) {
 
             if(jugadors[i].maBuida()){
 
                 jugadors[i].addPuntsTotals(punts);
-                return true;
+                System.out.println("El jugador " + jugadors[i].getNom() + " ha guanyat = " + punts + " punts");
+            }else if (guanyador){
+                jugadors[i].setPunts(0);
             }
         }
-        return false;
-    }
 
-    public boolean fiDelJoc(Jugador[]jugadors){
+        return guanyador;
+    }
+    public boolean guanyarRondaParelles(Jugador[] jugadors){
+
+        int punts = 0;
+        boolean guanyador = false;
+        int index;
 
         for (int i = 0; i < jugadors.length; i++) {
 
-            if(jugadors[i].isGuanyador()){
-                System.out.println("El jugador " );
-                return true;
+            punts += jugadors[i].getPunts();
+
+            if(jugadors[i].maBuida()){
+                guanyador = true;
             }
         }
-        return false;
+        for (int i = 0; i < jugadors.length; i++) {
+
+            if (jugadors[i].maBuida() && jugadors.length > i + 2) {
+
+                System.out.print("Els jugadors = " + jugadors[i].getNom() + " i " + jugadors[i + 2].getNom() + " han guanyat " + punts + " punts");
+
+                jugadors[i].addPuntsTotals(punts);
+                jugadors[i+2].addPuntsTotals(punts);
+
+            }else{
+                System.out.print("Els jugadors = " + jugadors[i].getNom() + " i " + jugadors[i - 2].getNom() + " han guanyat " + punts + " punts");
+                jugadors[i].addPuntsTotals(punts);
+                jugadors[i-2].addPuntsTotals(punts);
+            }
+            if (guanyador) {
+                jugadors[i].setPunts(0);
+            }
+        }
+        return guanyador;
     }
 
     public int getTotalPuntsSolitari() {

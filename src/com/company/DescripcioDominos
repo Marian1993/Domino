@@ -1,0 +1,27 @@
+S'emblances:
+-Cada domino començara la partida el que tingui el dobles 6,
+ sino el dobles de forma descendent fins en es doble 0
+-Cada domino, la persona que es quedi sense fitxes, huarà de collir tantes fitxes fins que en pugui tirar una,
+en cas de no haver fitxes per collir, pasara el torn.
+
+Domino Llati:
+-Finalització:
+    -Partida individual -> 100 o més punts
+    -Partida en parelles -> 200 o més punts
+-Empat:
+    -El jugador amb menys punts, es suma els punts del contrari.
+
+Domino Chileno:
+-Finalització:
+    -Partida individual -> 75 o més punts
+    -Partida en parelles -> 100 o més punts
+-Empat:
+    -El jugador o parella amb més punts es sumaran les fitxes que quedin per collir.
+
+Domino Venezola:
+-Finalització:
+    -Partida individual -> 121 o més punts
+    -Partida en parelles -> 121 o més punts
+-Empat:
+    -Es gira una fitxa i el que tregi el numero més baix perd.
+

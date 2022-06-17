@@ -20,6 +20,5 @@ public class Main {
         InteraccioJoc.joc();
         //InteraccioJoc.algo();
 
-
     }
 }

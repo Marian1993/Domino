@@ -9,14 +9,12 @@ public class Jugador {
     private ArrayList<Fitxa> fitxesJugador;
     private int punts;
     private int puntsTotals;
-    private boolean guanyador;
 
 
     public Jugador(String nom, int id){
 
         this.nom = nom;
         this.id = id;
-        this.guanyador = false;
         fitxesJugador = new ArrayList<>();
     }
 
@@ -91,13 +89,5 @@ public class Jugador {
 
     public void addPuntsTotals(int puntsTotals) {
         this.puntsTotals += puntsTotals;
-    }
-
-    public boolean isGuanyador() {
-        return guanyador;
-    }
-
-    public void setGuanyador(boolean guanyador) {
-        this.guanyador = guanyador;
     }
 }

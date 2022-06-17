@@ -7,8 +7,11 @@ public class InteraccioJoc {
 
     private static ArrayList<Fitxa> fitxes = new ArrayList<Fitxa>();
     private static ArrayList<Fitxa> taulell = new ArrayList<Fitxa>();
-    private static Domino[] dominos = {new DominoLlati(),new DominoChileno(), new DominoVenezola()};
+    private final static Domino[] dominos = {new DominoLlati(),new DominoChileno(), new DominoVenezola()};
     private static Jugador[] jugadors;
+    private static int aux = 0;
+    private static int fitxaInicial = 0;
+
 
     public static void crearFitxes(){
 
@@ -20,45 +23,124 @@ public class InteraccioJoc {
             }
         }
     }
-    public static void repartirFitxes(Jugador[] jugadors){
+    public static void repartirFitxes(){
 
-        for (Jugador jugador : jugadors) {
+        for (int i = 0; i < jugadors.length; i++) {
 
             int fitxesAssignades = 0;
 
-            while (fitxesAssignades != 7) {
+            while (fitxesAssignades != 4) {
 
                 Fitxa fitxa = fitxes.get((int) (Math.random() * fitxes.size()));
                 if (!(fitxa.isUsada())) {
                     fitxa.setUsada(true);
-                    jugador.addFitxa(fitxa);
+                    jugadors[i].addFitxa(fitxa);
+                    fitxes.remove(fitxa);
                     fitxesAssignades++;
-                    //System.out.println(fitxa.getEsquerra() + "-" + fitxa.getDreta());
                 }
             }
         }
     }
 
+    public static void collirFitxa(Jugador jugador){
 
-    public static boolean colocarFitxa(Fitxa fitxa){
+        boolean fitxaUtil = false;
+
+        while (!fitxaUtil && !fitxes.isEmpty()) {
+
+            Fitxa fitxa = fitxes.get((int) (Math.random() * fitxes.size()));
+            if (!(fitxa.isUsada())) {
+                fitxa.setUsada(true);
+                jugador.addFitxa(fitxa);
+                if(Input.comprovarSiEsPotColocarSaFitxa(fitxa,taulell)){
+
+                    fitxaUtil = true;
+                }
+            }
+        }
+    }
+
+    public static void colocarFitxa(Fitxa fitxa){
 
         if(taulell.isEmpty()){
             taulell.add(fitxa);
-            return true;
 
-        }else if(taulell.get(0).getEsquerra() == fitxa.getEsquerra() || taulell.get(0).getEsquerra() == fitxa.getDreta()
-                || taulell.get(0).getDreta() == fitxa.getEsquerra() || taulell.get(0).getDreta() == fitxa.getDreta()){
+        }else if(taulell.get(0).getDreta() == fitxa.getEsquerra() && !taulell.get(0).isDretaOcupada()){
 
             taulell.add(0,fitxa);
-            return  true;
+            fitxa.setEsquerraOcupada(true);
+            if((taulell.get(1).getDreta() == fitxa.getEsquerra() || taulell.get(1).getDreta() == fitxa.getDreta()) && aux == 0){
+                taulell.get(1).setDretaOcupada(true);
+                aux++;
+            }
+            fitxaInicial++;
 
-        }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta()
-                || taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta()){
+        }else if(taulell.get(0).getDreta() == fitxa.getDreta() && !taulell.get(0).isDretaOcupada()){
 
+            taulell.add(0,fitxa);
+            fitxa.setDretaOcupada(true);
+            if((taulell.get(1).getDreta() == fitxa.getEsquerra() || taulell.get(1).getDreta() == fitxa.getDreta()) && aux == 0){
+                taulell.get(1).setDretaOcupada(true);
+                aux++;
+            }
+            fitxaInicial++;
+
+        }else if(taulell.get(0).getEsquerra() == fitxa.getEsquerra() && !taulell.get(0).isEsquerraOcupada() && taulell.size() > 1){
+
+            taulell.add(0,fitxa);
+            fitxa.setEsquerraOcupada(true);
+            if((taulell.get(1).getEsquerra() == fitxa.getDreta() || taulell.get(1).getEsquerra() == fitxa.getEsquerra()) && aux == 0){
+                taulell.get(1).setEsquerraOcupada(true);
+                aux++;
+            }
+            fitxaInicial++;
+
+        }else if(taulell.get(0).getEsquerra() == fitxa.getDreta() && !taulell.get(0).isEsquerraOcupada() && taulell.size() > 1){
+
+            taulell.add(0,fitxa);
+            fitxa.setDretaOcupada(true);
+            if((taulell.get(1).getEsquerra() == fitxa.getDreta() || taulell.get(1).getEsquerra() == fitxa.getEsquerra()) && aux == 0){
+                taulell.get(1).setEsquerraOcupada(true);
+                aux++;
+            }
+            fitxaInicial++;
+
+        }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
+
+            if((taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta()) && aux == 1){
+                taulell.get(taulell.size()-1).setEsquerraOcupada(true);
+                aux++;
+            }
             taulell.add(taulell.size(), fitxa);
-            return true;
+            fitxa.setEsquerraOcupada(true);
+
+        }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
+
+            if((taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta()) && aux == 1){
+                taulell.get(taulell.size()-1).setEsquerraOcupada(true);
+                aux++;
+            }
+            taulell.add(taulell.size(), fitxa);
+            fitxa.setDretaOcupada(true);
+
+        }else if(taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra() && !taulell.get(taulell.size()-1).isDretaOcupada() && taulell.size() > 1){
+
+            if((taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta() || taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra()) && aux == 1){
+                taulell.get(taulell.size()-1).setDretaOcupada(true);
+                aux++;
+            }
+            taulell.add(taulell.size(), fitxa);
+            fitxa.setEsquerraOcupada(true);
+
+        } else if(taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta() && !taulell.get(taulell.size()-1).isDretaOcupada() && taulell.size() > 1){
+
+            if((taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta() || taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra()) && aux == 1){
+                taulell.get(taulell.size()-1).setDretaOcupada(true);
+                aux++;
+            }
+            taulell.add(taulell.size(), fitxa);
+            fitxa.setDretaOcupada(true);
         }
-        return false;
     }
 
     public static void joc(){
@@ -84,13 +166,12 @@ public class InteraccioJoc {
 
         do {
             crearFitxes();
-            repartirFitxes(jugadors);
+            repartirFitxes();
             int torn = dominos[domino].elegirQuiInizialitza(jugadors).getId();
-            while(!dominos[domino].guanyarRonda(jugadors)){
+            while(!dominos[domino].guanyarRondaSolitari(jugadors)){
 
-                Input.elegirFitxa(jugadors[torn%2],taulell);
-                Output.imprimirTaulell(taulell);
-
+                colocarFitxa(Input.elegirFitxa(jugadors[torn%4],taulell));
+                Output.imprimirTaulell(taulell,fitxaInicial);
                 torn++;
             }
         }while (!dominos[domino].guanyadorSolitari(jugadors));
@@ -98,6 +179,17 @@ public class InteraccioJoc {
     }
     public static void partidaEnParelles(int domino){
 
+        do {
+            crearFitxes();
+            repartirFitxes();
+            int torn = dominos[domino].elegirQuiInizialitza(jugadors).getId();
+            while(!dominos[domino].guanyarRondaParelles(jugadors)){
+
+                colocarFitxa(Input.elegirFitxa(jugadors[torn%2],taulell));
+                Output.imprimirTaulell(taulell,fitxaInicial);
+                torn++;
+            }
+        }while (!dominos[domino].guanyadorParelles(jugadors));
     }
 
     public  static void algo(){

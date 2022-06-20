@@ -44,16 +44,19 @@ public class Jugador {
 
         for (int i = 0; i < fitxesJugador.size(); i++) {
 
-             if(fitxesJugador.get(i).getEsquerra() == fitxa.getEsquerra() && fitxesJugador.get(i).getDreta() == fitxa.getDreta()){
+             if(fitxesJugador.get(i).getESQUERRA() == fitxa.getESQUERRA() && fitxesJugador.get(i).getDRETA() == fitxa.getDRETA()){
                  return true;
              }
         }
         return false;
     }
+    public void eliminarTotesLesFitxes(){
+        fitxesJugador.removeAll(fitxesJugador);
+    }
 
     private String fitxa(Fitxa fitxa){
 
-        return fitxa.getEsquerra() + "-" + fitxa.getDreta();
+        return fitxa.getESQUERRA() + "-" + fitxa.getDRETA();
 
     }
     public void imprimirFitxes(){

@@ -10,7 +10,14 @@ public class DominoChileno extends Domino{
     }
 
     @Override
-    public boolean empat() {
-        return false;
+    public void empat(Jugador[] jugadors) {
+
+        if(jugadors[0].getPuntsTotals() < jugadors[1].getPuntsTotals()){
+
+            jugadors[0].setPunts(jugadors[1].getPunts());
+
+        }else {
+            jugadors[1].setPunts(jugadors[0].getPunts());
+        }
     }
 }

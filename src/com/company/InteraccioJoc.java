@@ -1,12 +1,11 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class InteraccioJoc {
 
     private static ArrayList<Fitxa> fitxes = new ArrayList<Fitxa>();
-    private static ArrayList<Fitxa> taulell = new ArrayList<Fitxa>();
+    private static ArrayList<Fitxa> taulell;
     private final static Domino[] dominos = {new DominoLlati(),new DominoChileno(), new DominoVenezola()};
     private static Jugador[] jugadors;
     private static int aux = 0;
@@ -29,35 +28,29 @@ public class InteraccioJoc {
 
             int fitxesAssignades = 0;
 
-            while (fitxesAssignades != 4) {
+            while (fitxesAssignades != 7) {
 
                 Fitxa fitxa = fitxes.get((int) (Math.random() * fitxes.size()));
-                if (!(fitxa.isUsada())) {
-                    fitxa.setUsada(true);
-                    jugadors[i].addFitxa(fitxa);
-                    fitxes.remove(fitxa);
-                    fitxesAssignades++;
-                }
+                jugadors[i].addFitxa(fitxa);
+                fitxes.remove(fitxa);
+                fitxesAssignades++;
             }
         }
     }
 
-    public static void collirFitxa(Jugador jugador){
+    public static boolean collirFitxa(Jugador jugador){
 
-        boolean fitxaUtil = false;
-
-        while (!fitxaUtil && !fitxes.isEmpty()) {
+        while (!fitxes.isEmpty()) {
 
             Fitxa fitxa = fitxes.get((int) (Math.random() * fitxes.size()));
-            if (!(fitxa.isUsada())) {
-                fitxa.setUsada(true);
-                jugador.addFitxa(fitxa);
-                if(Input.comprovarSiEsPotColocarSaFitxa(fitxa,taulell)){
+            jugador.addFitxa(fitxa);
+            fitxes.remove(fitxa);
+            if(Input.comprovarSiEsPotColocarSaFitxa(fitxa,taulell)){
 
-                    fitxaUtil = true;
-                }
+                return true;
             }
         }
+        return  false;
     }
 
     public static void colocarFitxa(Fitxa fitxa){
@@ -65,76 +58,76 @@ public class InteraccioJoc {
         if(taulell.isEmpty()){
             taulell.add(fitxa);
 
-        }else if(taulell.get(0).getDreta() == fitxa.getEsquerra() && !taulell.get(0).isDretaOcupada()){
+        }else if(taulell.get(0).getDRETA() == fitxa.getESQUERRA() && !taulell.get(0).isDretaOcupada()){
 
             taulell.add(0,fitxa);
             fitxa.setEsquerraOcupada(true);
-            if((taulell.get(1).getDreta() == fitxa.getEsquerra() || taulell.get(1).getDreta() == fitxa.getDreta()) && aux == 0){
+            if((taulell.get(1).getDRETA() == fitxa.getESQUERRA() || taulell.get(1).getDRETA() == fitxa.getDRETA()) && aux == 0){
                 taulell.get(1).setDretaOcupada(true);
                 aux++;
             }
             fitxaInicial++;
 
-        }else if(taulell.get(0).getDreta() == fitxa.getDreta() && !taulell.get(0).isDretaOcupada()){
+        }else if(taulell.get(0).getDRETA() == fitxa.getDRETA() && !taulell.get(0).isDretaOcupada()){
 
             taulell.add(0,fitxa);
             fitxa.setDretaOcupada(true);
-            if((taulell.get(1).getDreta() == fitxa.getEsquerra() || taulell.get(1).getDreta() == fitxa.getDreta()) && aux == 0){
+            if((taulell.get(1).getDRETA() == fitxa.getESQUERRA() || taulell.get(1).getDRETA() == fitxa.getDRETA()) && aux == 0){
                 taulell.get(1).setDretaOcupada(true);
                 aux++;
             }
             fitxaInicial++;
 
-        }else if(taulell.get(0).getEsquerra() == fitxa.getEsquerra() && !taulell.get(0).isEsquerraOcupada() && taulell.size() > 1){
+        }else if(taulell.get(0).getESQUERRA() == fitxa.getESQUERRA() && !taulell.get(0).isEsquerraOcupada() && taulell.size() > 1){
 
             taulell.add(0,fitxa);
             fitxa.setEsquerraOcupada(true);
-            if((taulell.get(1).getEsquerra() == fitxa.getDreta() || taulell.get(1).getEsquerra() == fitxa.getEsquerra()) && aux == 0){
+            if((taulell.get(1).getESQUERRA() == fitxa.getDRETA() || taulell.get(1).getESQUERRA() == fitxa.getESQUERRA()) && aux == 0){
                 taulell.get(1).setEsquerraOcupada(true);
                 aux++;
             }
             fitxaInicial++;
 
-        }else if(taulell.get(0).getEsquerra() == fitxa.getDreta() && !taulell.get(0).isEsquerraOcupada() && taulell.size() > 1){
+        }else if(taulell.get(0).getESQUERRA() == fitxa.getDRETA() && !taulell.get(0).isEsquerraOcupada() && taulell.size() > 1){
 
             taulell.add(0,fitxa);
             fitxa.setDretaOcupada(true);
-            if((taulell.get(1).getEsquerra() == fitxa.getDreta() || taulell.get(1).getEsquerra() == fitxa.getEsquerra()) && aux == 0){
+            if((taulell.get(1).getESQUERRA() == fitxa.getDRETA() || taulell.get(1).getESQUERRA() == fitxa.getESQUERRA()) && aux == 0){
                 taulell.get(1).setEsquerraOcupada(true);
                 aux++;
             }
             fitxaInicial++;
 
-        }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
+        }else if(taulell.get(taulell.size()-1).getESQUERRA() == fitxa.getESQUERRA() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
 
-            if((taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta()) && aux == 1){
+            if((taulell.get(taulell.size()-1).getESQUERRA() == fitxa.getESQUERRA() || taulell.get(taulell.size()-1).getESQUERRA() == fitxa.getDRETA()) && aux == 1){
                 taulell.get(taulell.size()-1).setEsquerraOcupada(true);
                 aux++;
             }
             taulell.add(taulell.size(), fitxa);
             fitxa.setEsquerraOcupada(true);
 
-        }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
+        }else if(taulell.get(taulell.size()-1).getESQUERRA() == fitxa.getDRETA() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
 
-            if((taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() || taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta()) && aux == 1){
+            if((taulell.get(taulell.size()-1).getESQUERRA() == fitxa.getESQUERRA() || taulell.get(taulell.size()-1).getESQUERRA() == fitxa.getDRETA()) && aux == 1){
                 taulell.get(taulell.size()-1).setEsquerraOcupada(true);
                 aux++;
             }
             taulell.add(taulell.size(), fitxa);
             fitxa.setDretaOcupada(true);
 
-        }else if(taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra() && !taulell.get(taulell.size()-1).isDretaOcupada() && taulell.size() > 1){
+        }else if(taulell.get(taulell.size()-1).getDRETA() == fitxa.getESQUERRA() && !taulell.get(taulell.size()-1).isDretaOcupada() && taulell.size() > 1){
 
-            if((taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta() || taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra()) && aux == 1){
+            if((taulell.get(taulell.size()-1).getDRETA() == fitxa.getDRETA() || taulell.get(taulell.size()-1).getDRETA() == fitxa.getESQUERRA()) && aux == 1){
                 taulell.get(taulell.size()-1).setDretaOcupada(true);
                 aux++;
             }
             taulell.add(taulell.size(), fitxa);
             fitxa.setEsquerraOcupada(true);
 
-        } else if(taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta() && !taulell.get(taulell.size()-1).isDretaOcupada() && taulell.size() > 1){
+        } else if(taulell.get(taulell.size()-1).getDRETA() == fitxa.getDRETA() && !taulell.get(taulell.size()-1).isDretaOcupada() && taulell.size() > 1){
 
-            if((taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta() || taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra()) && aux == 1){
+            if((taulell.get(taulell.size()-1).getDRETA() == fitxa.getDRETA() || taulell.get(taulell.size()-1).getDRETA() == fitxa.getESQUERRA()) && aux == 1){
                 taulell.get(taulell.size()-1).setDretaOcupada(true);
                 aux++;
             }
@@ -162,53 +155,45 @@ public class InteraccioJoc {
 
     }
 
-    public static void partidaEnSolitari(int domino){
+    private static void partidaEnSolitari(int domino){
 
         do {
+            taulell = new ArrayList<Fitxa>();
+            aux = 0;
+            fitxaInicial = 0;
             crearFitxes();
             repartirFitxes();
             int torn = dominos[domino].elegirQuiInizialitza(jugadors).getId();
             while(!dominos[domino].guanyarRondaSolitari(jugadors)){
 
-                colocarFitxa(Input.elegirFitxa(jugadors[torn%4],taulell));
-                Output.imprimirTaulell(taulell,fitxaInicial);
+                Fitxa fitxa = Input.elegirFitxa(jugadors[torn%2],taulell);
+                if(fitxa != null){
+                    colocarFitxa(fitxa);
+                    Output.imprimirTaulell(taulell,fitxaInicial);
+                }
                 torn++;
             }
         }while (!dominos[domino].guanyadorSolitari(jugadors));
 
     }
-    public static void partidaEnParelles(int domino){
+
+    private static void partidaEnParelles(int domino){
 
         do {
+            taulell = new ArrayList<Fitxa>();
+            aux = 0;
             crearFitxes();
             repartirFitxes();
             int torn = dominos[domino].elegirQuiInizialitza(jugadors).getId();
             while(!dominos[domino].guanyarRondaParelles(jugadors)){
 
-                colocarFitxa(Input.elegirFitxa(jugadors[torn%2],taulell));
-                Output.imprimirTaulell(taulell,fitxaInicial);
+                Fitxa fitxa = Input.elegirFitxa(jugadors[torn%4],taulell);
+                if(fitxa != null){
+                    colocarFitxa(fitxa);
+                    Output.imprimirTaulell(taulell,fitxaInicial);
+                }
                 torn++;
             }
         }while (!dominos[domino].guanyadorParelles(jugadors));
     }
-
-    public  static void algo(){
-
-        ArrayList<String> array = new ArrayList<>();
-
-        for (int i = 0; i < 6; i++) {
-
-            array.add(0,"ejemplo " + i);
-
-        }
-        for (int i = 0; i < array.size(); i++) {
-
-            System.out.println(array.get(i));
-
-        }
-
-
-    }
-
-
 }

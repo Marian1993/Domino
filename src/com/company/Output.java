@@ -13,31 +13,31 @@ public class Output {
             if(taulell.size() == 1){
 
                 System.out.println();
-                System.out.println(taulell.get(i).getEsquerra() + "\n-\n" + taulell.get(i).getDreta());
+                System.out.println(taulell.get(i).getESQUERRA() + "\n-\n" + taulell.get(i).getDRETA());
                 System.out.println();
 
 
             }else if(taulell.get(i).isDretaOcupada()  && i <= fitxaInicial){
 
                 System.out.println();
-                System.out.println(taulell.get(i).getEsquerra() + "\n-\n" + taulell.get(i).getDreta());
+                System.out.println(taulell.get(i).getESQUERRA() + "\n-\n" + taulell.get(i).getDRETA());
                 System.out.println();
 
             }else if(taulell.get(i).isEsquerraOcupada()  && i <= fitxaInicial){
 
                 System.out.println();
-                System.out.println(taulell.get(i).getDreta() + "\n-\n" + taulell.get(i).getEsquerra());
+                System.out.println(taulell.get(i).getDRETA() + "\n-\n" + taulell.get(i).getESQUERRA());
                 System.out.println();
             }else if(taulell.get(i).isDretaOcupada() && i > fitxaInicial){
 
                 System.out.println();
-                System.out.println(taulell.get(i).getDreta() + "\n-\n" + taulell.get(i).getEsquerra());
+                System.out.println(taulell.get(i).getDRETA() + "\n-\n" + taulell.get(i).getESQUERRA());
                 System.out.println();
 
             }else if(taulell.get(i).isEsquerraOcupada() && i > fitxaInicial){
 
                 System.out.println();
-                System.out.println(taulell.get(i).getEsquerra() + "\n-\n" + taulell.get(i).getDreta());
+                System.out.println(taulell.get(i).getESQUERRA() + "\n-\n" + taulell.get(i).getDRETA());
                 System.out.println();
             }
         }

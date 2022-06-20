@@ -60,22 +60,29 @@ public class Input {
 
     public static Fitxa elegirFitxa(Jugador jugador, ArrayList<Fitxa> taulell){
 
-
         while (true) {
 
-            collirFitxesNecessaries(jugador, taulell);
+            if(!collirFitxesNecessaries(jugador, taulell)){
+                System.out.println("No queden més fitxes que collir, i no en pot colocar cap");
+                return null;
+            }
             jugador.imprimirFitxes();
             System.out.print(jugador.getNom() + " quina fitxa vols colocar = ");
             int numFitxa = PosarNumero.esNecessitaNumero();
 
-            Fitxa fitxa = jugador.getFitxesJugador().get(numFitxa);
-            if (comprovarSiEsPotColocarSaFitxa(fitxa, taulell)) {
-                jugador.eliminarFitxa(fitxa);
-                return fitxa;
-            } else {
-                System.out.println("Aquesta fitxa no en encaixa a cap banda");
-            }
+            if(!(numFitxa > jugador.getFitxesJugador().size())){
 
+                Fitxa fitxa = jugador.getFitxesJugador().get(numFitxa);
+                if (comprovarSiEsPotColocarSaFitxa(fitxa, taulell)) {
+                    jugador.eliminarFitxa(fitxa);
+                    return fitxa;
+                } else {
+                    System.out.println("Aquesta fitxa no en encaixa a cap banda");
+                }
+            }else {
+
+                System.out.println("Has possa't un número incorrecte");
+            }
         }
     }
 
@@ -84,35 +91,35 @@ public class Input {
         if(taulell.isEmpty()){
             return true;
 
-        }else if(taulell.get(0).getDreta() == fitxa.getEsquerra() && !taulell.get(0).isDretaOcupada()){
+        }else if(taulell.get(0).getDRETA() == fitxa.getESQUERRA() && !taulell.get(0).isDretaOcupada()){
 
             return true;
 
-        }else if(taulell.get(0).getDreta() == fitxa.getDreta() && !taulell.get(0).isDretaOcupada()){
+        }else if(taulell.get(0).getDRETA() == fitxa.getDRETA() && !taulell.get(0).isDretaOcupada()){
 
             return true;
 
-        }else if(taulell.get(0).getEsquerra() == fitxa.getEsquerra() && !taulell.get(0).isEsquerraOcupada()){
+        }else if(taulell.get(0).getESQUERRA() == fitxa.getESQUERRA() && !taulell.get(0).isEsquerraOcupada()){
 
             return true;
 
-        }else if(taulell.get(0).getEsquerra() == fitxa.getDreta() && !taulell.get(0).isEsquerraOcupada()){
+        }else if(taulell.get(0).getESQUERRA() == fitxa.getDRETA() && !taulell.get(0).isEsquerraOcupada()){
 
             return true;
 
-        }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getEsquerra() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
+        }else if(taulell.get(taulell.size()-1).getESQUERRA() == fitxa.getESQUERRA() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
 
             return true;
 
-        }else if(taulell.get(taulell.size()-1).getEsquerra() == fitxa.getDreta() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
+        }else if(taulell.get(taulell.size()-1).getESQUERRA() == fitxa.getDRETA() && !taulell.get(taulell.size()-1).isEsquerraOcupada()){
 
             return true;
 
-        }else if(taulell.get(taulell.size()-1).getDreta() == fitxa.getEsquerra() && !taulell.get(taulell.size()-1).isDretaOcupada()){
+        }else if(taulell.get(taulell.size()-1).getDRETA() == fitxa.getESQUERRA() && !taulell.get(taulell.size()-1).isDretaOcupada()){
 
             return true;
 
-        } else if(taulell.get(taulell.size()-1).getDreta() == fitxa.getDreta() && !taulell.get(taulell.size()-1).isDretaOcupada()){
+        } else if(taulell.get(taulell.size()-1).getDRETA() == fitxa.getDRETA() && !taulell.get(taulell.size()-1).isDretaOcupada()){
 
             return true;
         }
@@ -123,6 +130,7 @@ public class Input {
 
         int totalFitxesCollides = 0;
         int fitxesJugador = jugador.getFitxesJugador().size();
+
 
         while (true) {
 
@@ -137,8 +145,11 @@ public class Input {
                     return true;
                 }
             }
+            if(!InteraccioJoc.collirFitxa(jugador)){
+
+                return false;
+            }
             System.out.println("Ara se te colliran fitxes fins que en tinguis per tirar");
-            InteraccioJoc.collirFitxa(jugador);
         }
     }
 

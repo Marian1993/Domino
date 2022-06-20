@@ -2,42 +2,30 @@ package com.company;
 
 public class Fitxa {
 
-    private int dreta;
+    private final int DRETA;
     private boolean dretaOcupada;
-    private int esquerra;
+    private final int ESQUERRA;
     private boolean esquerraOcupada;
-    private boolean usada;
-    private int total;
 
     public Fitxa(int esquerra, int dreta){
 
-        this.usada = false;
-        this.dreta = dreta;
-        this.esquerra = esquerra;
+        this.DRETA = dreta;
+        this.ESQUERRA = esquerra;
         this.dretaOcupada = false;
         this.esquerraOcupada = false;
     }
 
-    public int getDreta() {
-        return dreta;
+    public int getDRETA() {
+        return DRETA;
     }
 
-    public int getEsquerra() {
-        return esquerra;
+    public int getESQUERRA() {
+        return ESQUERRA;
     }
 
     public int getTotal() {
-        return this.dreta + this.esquerra;
+        return this.DRETA + this.ESQUERRA;
     }
-
-    public boolean isUsada() {
-        return usada;
-    }
-
-    public void setUsada(boolean usada) {
-        this.usada = usada;
-    }
-
     public boolean isDretaOcupada() {
         return dretaOcupada;
     }

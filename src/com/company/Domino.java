@@ -13,17 +13,34 @@ public abstract class Domino {
 
         while (true) {
 
-            for (int i = 0; i < jugadors.length; i++) {
+            if(costats <= 6 && costats >= 0){
 
-                if(jugadors[i].comprovarFitxaPerSortir(new Fitxa(costats, costats))){
+                for (int i = 0; i < jugadors.length; i++) {
 
-                    return jugadors[i];
+                    if(jugadors[i].comprovarFitxaPerSortir(new Fitxa(costats, costats))){
+
+                        return jugadors[i];
+                    }
+                }
+                costats--;
+            }else {
+                for (int i = 0; i < jugadors.length; i++) {
+
+                    for (int j = 6; j >= 0; j--) {
+
+                        for (int z = 6; z >= 0; z--) {
+
+                            if (jugadors[i].comprovarFitxaPerSortir(new Fitxa(j, z))) {
+
+                                return jugadors[i];
+                            }
+                        }
+                    }
                 }
             }
-            costats--;
         }
     }
-    public abstract boolean empat();
+    public abstract void empat(Jugador[] jugadors);
 
     public boolean guanyadorSolitari(Jugador[] jugadors){
 
@@ -76,8 +93,13 @@ public abstract class Domino {
 
                 jugadors[i].addPuntsTotals(punts);
                 System.out.println("El jugador " + jugadors[i].getNom() + " ha guanyat = " + punts + " punts");
-            }else if (guanyador){
+                System.out.println("Te " + jugadors[i].getPuntsTotals() + " punts en total");
+            }else if(jugadors[0].getPunts() == jugadors[1].getPunts()){
+                empat(jugadors);
+            }
+            if (guanyador){
                 jugadors[i].setPunts(0);
+                jugadors[i].eliminarTotesLesFitxes();
             }
         }
 
@@ -87,12 +109,18 @@ public abstract class Domino {
 
         int punts = 0;
         boolean guanyador = false;
-        int index;
+        int puntuacioMesAlta = 0;
+        int index = 0;
 
         for (int i = 0; i < jugadors.length; i++) {
 
             punts += jugadors[i].getPunts();
 
+            if(jugadors[i].getPunts() > puntuacioMesAlta){
+                puntuacioMesAlta = jugadors[i].getPunts();
+                index = i;
+
+            }
             if(jugadors[i].maBuida()){
                 guanyador = true;
             }
@@ -101,15 +129,18 @@ public abstract class Domino {
 
             if (jugadors[i].maBuida() && jugadors.length > i + 2) {
 
-                System.out.print("Els jugadors = " + jugadors[i].getNom() + " i " + jugadors[i + 2].getNom() + " han guanyat " + punts + " punts");
-
                 jugadors[i].addPuntsTotals(punts);
                 jugadors[i+2].addPuntsTotals(punts);
+                System.out.println("Els jugadors = " + jugadors[i].getNom() + " i " + jugadors[i + 2].getNom() + " han guanyat " + punts + " punts");
+                System.out.println("Tenen " + jugadors[i].getPuntsTotals() + " punts en total");
 
-            }else{
-                System.out.print("Els jugadors = " + jugadors[i].getNom() + " i " + jugadors[i - 2].getNom() + " han guanyat " + punts + " punts");
+            }else if(jugadors[i].maBuida() && 0 <= i - 2){
                 jugadors[i].addPuntsTotals(punts);
                 jugadors[i-2].addPuntsTotals(punts);
+                System.out.println("Els jugadors = " + jugadors[i].getNom() + " i " + jugadors[i - 2].getNom() + " han guanyat " + punts + " punts");
+                System.out.println("Tenen " + jugadors[i].getPuntsTotals() + " punts en total");
+            }else if(i != index && jugadors[i].getPunts() == puntuacioMesAlta){
+                empat(jugadors);
             }
             if (guanyador) {
                 jugadors[i].setPunts(0);

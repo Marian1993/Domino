@@ -42,7 +42,18 @@ public class DominoVenezola extends Domino{
                 indexGuanyador = i;
             }
         }
-        System.out.println("El jugador " + jugadors[indexGuanyador].getNom() + "es el que ha guanyat");
-        jugadors[indexGuanyador].addPuntsTotals(puntstotals);
+        for (int i = 0; i < jugadors.length; i++) {
+
+            if(indexGuanyador%2 == 0 && i%2 == 0){
+
+                jugadors[i].addPuntsTotals(puntstotals);
+                System.out.println("El jugador " + jugadors[i].getNom() + "es el que ha guanyat");
+
+            }else if(indexGuanyador%2 == 1 && i%2 == 1) {
+
+                jugadors[i].addPuntsTotals(puntstotals);
+                System.out.println("El jugador " + jugadors[i].getNom() + "es el que ha guanyat");
+            }
+        }
     }
 }

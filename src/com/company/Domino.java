@@ -48,7 +48,7 @@ public abstract class Domino {
 
             if(jugadors[i].getPuntsTotals() >= totalPuntsSolitari){
 
-                System.out.println("El guanyador ha estat = " + jugadors[i].getNom());
+                System.out.println("El guanyador de l'empat ha estat = " + jugadors[i].getNom());
                 return true;
             }
         }
@@ -76,32 +76,26 @@ public abstract class Domino {
     public boolean guanyarRondaSolitari(Jugador[] jugadors){
 
         int punts = 0;
+        int index = 0;
         boolean guanyador = false;
 
+        if(jugadors[0].getPunts() == jugadors[1].getPunts()){
+            empat(jugadors);
+        }
         for (int i = 0; i < jugadors.length; i++) {
 
             punts += jugadors[i].getPunts();
 
             if(jugadors[i].maBuida()){
                 guanyador = true;
+                index = i;
             }
-
+            jugadors[i].setPunts(0);
+            jugadors[i].eliminarTotesLesFitxes();
         }
-        for (int i = 0; i < jugadors.length; i++) {
-
-            if(jugadors[i].maBuida()){
-
-                jugadors[i].addPuntsTotals(punts);
-                System.out.println("El jugador " + jugadors[i].getNom() + " ha guanyat = " + punts + " punts");
-                System.out.println("Te " + jugadors[i].getPuntsTotals() + " punts en total");
-            }else if(jugadors[0].getPunts() == jugadors[1].getPunts()){
-                empat(jugadors);
-            }
-            if (guanyador){
-                jugadors[i].setPunts(0);
-                jugadors[i].eliminarTotesLesFitxes();
-            }
-        }
+        jugadors[index].addPuntsTotals(punts);
+        System.out.println("El jugador " + jugadors[index].getNom() + " ha guanyat = " + punts + " punts");
+        System.out.println("Te " + jugadors[index].getPuntsTotals() + " punts en total");
 
         return guanyador;
     }
@@ -110,6 +104,7 @@ public abstract class Domino {
         int punts = 0;
         boolean guanyador = false;
         int puntuacioMesAlta = 0;
+        int indexPuntuacioMesAlta = 0;
         int index = 0;
 
         for (int i = 0; i < jugadors.length; i++) {
@@ -118,32 +113,24 @@ public abstract class Domino {
 
             if(jugadors[i].getPunts() > puntuacioMesAlta){
                 puntuacioMesAlta = jugadors[i].getPunts();
-                index = i;
-
+                indexPuntuacioMesAlta = i;
             }
             if(jugadors[i].maBuida()){
                 guanyador = true;
+                index = i%2;
             }
+            jugadors[i].setPunts(0);
         }
         for (int i = 0; i < jugadors.length; i++) {
 
-            if (jugadors[i].maBuida() && jugadors.length > i + 2) {
+            if (index == i%2) {
 
                 jugadors[i].addPuntsTotals(punts);
-                jugadors[i+2].addPuntsTotals(punts);
-                System.out.println("Els jugadors = " + jugadors[i].getNom() + " i " + jugadors[i + 2].getNom() + " han guanyat " + punts + " punts");
-                System.out.println("Tenen " + jugadors[i].getPuntsTotals() + " punts en total");
+                System.out.println("El jugador = " + jugadors[i].getNom() + " han guanyat " + punts + " punts");
+                System.out.println("Te " + jugadors[i].getPuntsTotals() + " punts en total");
 
-            }else if(jugadors[i].maBuida() && 0 <= i - 2){
-                jugadors[i].addPuntsTotals(punts);
-                jugadors[i-2].addPuntsTotals(punts);
-                System.out.println("Els jugadors = " + jugadors[i].getNom() + " i " + jugadors[i - 2].getNom() + " han guanyat " + punts + " punts");
-                System.out.println("Tenen " + jugadors[i].getPuntsTotals() + " punts en total");
-            }else if(i != index && jugadors[i].getPunts() == puntuacioMesAlta){
+            }else if(i != indexPuntuacioMesAlta && jugadors[i].getPunts() == puntuacioMesAlta){
                 empat(jugadors);
-            }
-            if (guanyador) {
-                jugadors[i].setPunts(0);
             }
         }
         return guanyador;
